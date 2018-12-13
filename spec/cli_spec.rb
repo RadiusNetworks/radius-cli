@@ -2,6 +2,6 @@
 
 RSpec.describe "Running the CLI" do
   it "runs" do
-    expect(system("./exe/radius-cli 2>&1 1>/dev/null")).to be_truthy
+    expect(system("./exe/radius-cli", err: IO::NULL, out: IO::NULL)).to be_truthy
   end
 end
