@@ -1,0 +1,7 @@
+inherit_mode:
+  merge:
+    - Exclude
+    - IgnoredPatterns
+
+inherit_gem:
+  radius-spec: common_rubocop.yml
