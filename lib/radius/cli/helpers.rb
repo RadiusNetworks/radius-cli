@@ -6,6 +6,7 @@ require 'pathname'
 
 module Radius
   module Cli
+    # Common script / command setup helpers
     module Helpers
       APP_ROOT = Pathname.getwd.ascend.find { |path| path.join("Gemfile").exist? }
 
@@ -17,6 +18,10 @@ module Radius
 
       def app_root
         APP_ROOT
+      end
+
+      def app_domain
+        ENV['APP_DOMAIN']
       end
 
       def system!(*args)

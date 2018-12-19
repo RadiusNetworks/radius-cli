@@ -4,4 +4,7 @@
 
 ### Initial release:
 
-- TODO
+- Add `puma_dev` command
+
+  This command is designed to setup a dotenv Rails project to use HTTPS via
+  [puma-dev](https://github.com/puma/puma-dev).
