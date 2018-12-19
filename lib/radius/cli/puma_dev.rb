@@ -106,7 +106,14 @@ module Radius
       end
 
       def setup_cert
-        return unless options[:cert] && cert.exist?
+        return unless options[:cert]
+
+        unless cert.exist?
+          abort <<~INFO
+            Missing puma-dev cert: #{cert}
+            Try setting up puma-dev: #{$PROGRAM_NAME} --setup
+          INFO
+        end
 
         puts "Adding trusted Puma-dev CA cert..."
         if keychain
@@ -120,7 +127,7 @@ module Radius
       end
 
       def configure_ssl
-        return unless options[:cert] && cert.exist?
+        return unless options[:cert]
 
         puts "\nConfiguring SSL..."
         @combined_cert = Pathname("~/.ssh/pumadev.pem").expand_path
@@ -132,12 +139,6 @@ module Radius
         base_cert = Pathname("/usr/local/etc/openssl/cert.pem")
         abort "Missing OS root cert: #{base_cert}" unless base_cert.exist?
         abort "Unable to read root cert: #{base_cert}" unless base_cert.readable?
-        unless cert.exist?
-          abort <<~INFO
-            Missing puma-dev cert: #{cert}
-            Try setting up puma-dev: #{$PROGRAM_NAME} --setup
-          INFO
-        end
         abort "Unable to read puma-dev cert: #{cert}" unless cert.readable?
         combined_cert.delete if options[:force] && combined_cert.exist?
         puts "Creating custom CA SSL cert for puma-dev..."
